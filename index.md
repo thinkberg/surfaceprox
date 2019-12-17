@@ -16,6 +16,7 @@ My toolchain consists of (incomplete list)
 - VPN (OpenVPN, IPSec)
 - [Google Suite](https://gsuite.google.com/)
 - password managers ([1Password](https://1password.com), [gopass](https://github.com/gopasspw/gopass))
+- remote desktop (RDP, [mRemoteNG](https://mremoteng.org/))
 
 ## Make the T work on a [Surface Pro X](https://www.microsoft.com/en-us/search/result.aspx?q=Surface+Pro+X)
 
@@ -52,10 +53,9 @@ This is going to be a list of what I did to make it work for me (WIP):
 - go is [installable](https://github.com/golang/go/wiki/Ubuntu) via Ubuntu
 - [Visual Studio Code](https://code.visualstudio.com/) works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
 - Serial port forwarding:
-   there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. Now I need to learn how to use it.
+   there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. You can download [hub4com.exe (ARM64)](hub4com.exe) here.
   - https://gist.github.com/DraTeots/e0c669608466470baa6c
-  - https://robosavvy.com/forum/viewtopic.php?t=7578
-  
+  - https://robosavvy.com/forum/viewtopic.php?t=7578  
 > I decided to use the WSL2 to do the forwarding, using the following script:
 > ```bash
 > $ ./bin/redir.sh <myclouddesktop>
@@ -69,8 +69,7 @@ This is going to be a list of what I did to make it work for me (WIP):
 >   LOCALHOST=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}')
 >   ssh -tR 9999:$LOCALHOST:9999 -i .~/.ssh/comredir $1 socat pty,link=ttyV0 tcp:localhost:9999
 > ```
-  
-  The script creates a local `ttyV0` serial device on the remote machine that is now usable as if local.
+The script creates a local `ttyV0` serial device on the remote machine that is now usable as if local.
   
 ### Stuff to come ...
 
