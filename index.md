@@ -50,7 +50,7 @@ This is going to be a list of what I did to make it work for me (WIP):
 - as I do need local dev tools sometimes, I went and installes the [Java SDK 1.8 for ARM](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (the only available as of this writing)
 - the Jetbrains tools are now a no-brainer
 - go is [installable](https://github.com/golang/go/wiki/Ubuntu) via Ubuntu
-- Visual Studio Code works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
+- [Visual Studio Code](https://code.visualstudio.com/) works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
 
 ### Stuff to come ...
 
