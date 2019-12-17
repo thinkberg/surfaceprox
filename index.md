@@ -56,19 +56,19 @@ This is going to be a list of what I did to make it work for me (WIP):
   - https://gist.github.com/DraTeots/e0c669608466470baa6c
   - https://robosavvy.com/forum/viewtopic.php?t=7578
   
-  I decided to use the WSL2 to do the forwarding, using the following script:
-  ```bash
-  $ ./bin/redir.sh <myclouddesktop>
-  ```
-  
-  The actual `redir.sh`:
-  ```bash
-    #! /bin/bash
-    killall hub4com.exe
-    hub4com.exe  --create-filter=escparse,com,parse --create-filter=purge,com,purge  --create-filter=pinmap,com,pinmap:"--rts=cts --dtr=dsr --break=break" --create-filter=linectl,com,lc:"--br=remote --lc=remote" --add-filters=0:com --create-filter=telnet,tcp,telnet:" --comport=server --suppress-echo=yes"  --create-filter=lsrmap,tcp,lsrmap --create-filter=pinmap,tcp,pinmap:"--cts=cts --dsr=dsr --dcd=dcd --ring=ring" --create-filter=linectl,tcp,lc:"--br=local --lc=local" --add-filters=1:tcp --octs=off --baud=115200 "COM5" --use-driver=tcp "*9999" &
-    LOCALHOST=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}')
-    ssh -tR 9999:$LOCALHOST:9999 -i .~/.ssh/comredir $1 socat pty,link=ttyV0 tcp:localhost:9999
-  ```
+  > I decided to use the WSL2 to do the forwarding, using the following script:
+  > ```bash
+  > $ ./bin/redir.sh <myclouddesktop>
+  > ```
+  > 
+  > The actual `redir.sh`:
+  > ```bash
+  >   #! /bin/bash
+  >   killall hub4com.exe
+  >   hub4com.exe  --create-filter=escparse,com,parse --create-filter=purge,com,purge  --create-filter=pinmap,com,pinmap:"--rts=cts --dtr=dsr --break=break" --create-filter=linectl,com,lc:"--br=remote --lc=remote" --add-filters=0:com --create-filter=telnet,tcp,telnet:" --comport=server --suppress-echo=yes"  --create-filter=lsrmap,tcp,lsrmap --create-filter=pinmap,tcp,pinmap:"--cts=cts --dsr=dsr --dcd=dcd --ring=ring" --create-filter=linectl,tcp,lc:"--br=local --lc=local" --add-filters=1:tcp --octs=off --baud=115200 "COM5" --use-driver=tcp "*9999" &
+  >   LOCALHOST=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}')
+  >   ssh -tR 9999:$LOCALHOST:9999 -i .~/.ssh/comredir $1 socat pty,link=ttyV0 tcp:localhost:9999
+  > ```
   
   The script creates a local `ttyV0` serial device on the remote machine that is now usable as if local.
   
