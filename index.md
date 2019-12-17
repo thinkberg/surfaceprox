@@ -51,12 +51,29 @@ This is going to be a list of what I did to make it work for me (WIP):
 - the Jetbrains tools are now a no-brainer
 - go is [installable](https://github.com/golang/go/wiki/Ubuntu) via Ubuntu
 - [Visual Studio Code](https://code.visualstudio.com/) works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
-
-### Stuff to come ...
-
-- serial port forwarding (yes, I need that): there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. Now I need to learn how to use it.
+- Serial port forwarding:
+   there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. Now I need to learn how to use it.
   - https://gist.github.com/DraTeots/e0c669608466470baa6c
   - https://robosavvy.com/forum/viewtopic.php?t=7578
+  
+  I decided to use the WSL2 to do the forwarding, using the following script:
+  ```bash
+  $ ./bin/redir.sh <myclouddesktop>
+  ```
+  
+  The actual `redir.sh`:
+  ```bash
+    #! /bin/bash
+    killall hub4com.exe
+    hub4com.exe  --create-filter=escparse,com,parse --create-filter=purge,com,purge  --create-filter=pinmap,com,pinmap:"--rts=cts --dtr=dsr --break=break" --create-filter=linectl,com,lc:"--br=remote --lc=remote" --add-filters=0:com --create-filter=telnet,tcp,telnet:" --comport=server --suppress-echo=yes"  --create-filter=lsrmap,tcp,lsrmap --create-filter=pinmap,tcp,pinmap:"--cts=cts --dsr=dsr --dcd=dcd --ring=ring" --create-filter=linectl,tcp,lc:"--br=local --lc=local" --add-filters=1:tcp --octs=off --baud=115200 "COM5" --use-driver=tcp "*9999" &
+    LOCALHOST=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2; exit;}')
+    ssh -tR 9999:$LOCALHOST:9999 -i .~/.ssh/comredir $1 socat pty,link=ttyV0 tcp:localhost:9999
+  ```
+  
+  The script creates a local `ttyV0` serial device on the remote machine that is now usable as if local.
+  
+### Stuff to come ...
+
 - kubernetes 
 - docker
   
