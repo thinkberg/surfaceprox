@@ -57,6 +57,7 @@ This is going to be a list of what I did to make it work for me (WIP):
 - serial port forwarding (yes, I need that): there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. Now I need to learn how to use it.
   - https://gist.github.com/DraTeots/e0c669608466470baa6c
   - https://robosavvy.com/forum/viewtopic.php?t=7578
-  
+- kubernetes 
+- docker
   
   
