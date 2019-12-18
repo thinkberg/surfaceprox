@@ -48,8 +48,10 @@ This is going to be a list of what I did to make it work for me (WIP):
 - [Viscosity](https://www.sparklabs.com/viscosity/) is fortunately an OpenVPN client that has a native ARM64 binary of OpenVPN and works well
 
 ### Development tools
-- as I do need local dev tools sometimes, I went and installes the [Java SDK 1.8 for ARM](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (the only available as of this writing)
-- the Jetbrains tools are now a no-brainer
+- as I do need local dev tools sometimes, I went and installed the [Java SDK 1.8 for ARM](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html) (the only available as of this writing)
+- with Java on Linux, the Jetbrains tools are now a no-brainer (but require an X Server)
+   - recompile and replace the x86_64 copy of [libtpty.so](https://github.com/JetBrains/pty4j)
+   - recompile and replace in a similar way [fsNotifier](https://github.com/JetBrains/intellij-community/tree/master/native/fsNotifier/linux)
 - go is [installable](https://github.com/golang/go/wiki/Ubuntu) via Ubuntu
 - [Visual Studio Code](https://code.visualstudio.com/) works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
 - Serial port forwarding:
