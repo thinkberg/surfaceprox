@@ -56,8 +56,8 @@ This is going to be a list of what I did to make it work for me (WIP):
 - [Visual Studio Code](https://code.visualstudio.com/) works nicely, and also can use the serial port (Windows side), but I sometimes need the serial port on the Linux side and WSL2 does not yet allow that, see below.
 - Serial port forwarding:
    there is a tool called [com0com](http://com0com.sourceforge.net/) which contains a compatible server/client ([hub4com](https://sourceforge.net/projects/com0com/files/hub4com/)) that also works with linux [ser2net](https://sourceforge.net/projects/ser2net/) or other tools (socat) and I can use it to port forward through ssh. However, we need to compile it for ARM64, which in turn requires a [Visual Studio](https://visualstudio.microsoft.com/) installation with the ARM64 MSC libraries. The compilation works beautifully after setting the target for ARM64. You can download [hub4com.exe (ARM64)](hub4com.exe) here.
-  - https://gist.github.com/DraTeots/e0c669608466470baa6c
-  - https://robosavvy.com/forum/viewtopic.php?t=7578  
+  - [https://gist.github.com/DraTeots/e0c669608466470baa6c]()
+  - [https://robosavvy.com/forum/viewtopic.php?t=7578]()  
 > I decided to use the WSL2 to do the forwarding, using the following script:
 > ```bash
 > $ ./bin/redir.sh <myclouddesktop>
